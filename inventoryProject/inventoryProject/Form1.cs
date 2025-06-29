@@ -30,7 +30,8 @@ namespace inventoryProject
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            //fetch data when load the table
+            BindData();
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -57,6 +58,13 @@ namespace inventoryProject
         {
 
         }
+        void BindData() {
+            SqlCommand cmd = new SqlCommand("select * from inventory", con);
+            SqlDataAdapter sd = new SqlDataAdapter(cmd); //SqlDataAdapter is used to fill the DataTable with data from the database
+            DataTable dt = new DataTable();    //create empty DataTable
+            sd.Fill(dt);
+            dataGridView.DataSource = dt;   //set the DataSource of the DataGridView to the DataTable
+        }
 
         private void insertBtn_Click(object sender, EventArgs e)
         {
@@ -74,7 +82,7 @@ namespace inventoryProject
 
 
             con.Close();
-
+            BindData(); //because after insert then refresh again the fetch table
         }
     }
 }
