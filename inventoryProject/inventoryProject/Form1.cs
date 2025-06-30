@@ -51,12 +51,27 @@ namespace inventoryProject
 
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
-
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            if (productID.Text != "")
+            {
+                if (MessageBox.Show("Aare you sure to delete ?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("Delete inventory where productID='" + int.Parse(productID.Text) + "'", con);
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    MessageBox.Show("product deleted successfully");
+                    BindData();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter product ID to delete");
+            }
         }
         void BindData() {
             SqlCommand cmd = new SqlCommand("select * from inventory", con);
