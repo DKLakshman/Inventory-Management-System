@@ -58,7 +58,7 @@ namespace inventoryProject
         {
             if (productID.Text != "")
             {
-                if (MessageBox.Show("Aare you sure to delete ?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Aare you sure to delete ?", "Delete Record", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     con.Open();
                     SqlCommand cmd = new SqlCommand("Delete inventory where productID='" + int.Parse(productID.Text) + "'", con);
@@ -117,6 +117,28 @@ namespace inventoryProject
 
             con.Close();
             BindData(); //because after insert then refresh again the fetch table
+        }
+
+        private void searchBtn_Click(object sender, EventArgs e)
+        {
+            con.Open();
+            if (productID.Text != "")
+            {
+               
+                SqlCommand cmd = new SqlCommand("select * from inventory where productID ='" + productID.Text + "'", con);
+                SqlDataAdapter sd = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                sd.Fill(dt);
+                dataGridView.DataSource = dt;
+                
+            }
+            else
+            {
+                BindData();
+                MessageBox.Show("Please enter product ID to search");
+            }
+            con.Close();
+
         }
     }
 }
