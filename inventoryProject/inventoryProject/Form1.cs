@@ -84,5 +84,24 @@ namespace inventoryProject
             con.Close();
             BindData(); //because after insert then refresh again the fetch table
         }
+
+        private void updateBtn_Click(object sender, EventArgs e)
+        {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("update inventory set productName='" + productName.Text + "',productType='" + productType.Text + "',productQuantity='" + productQuantity.Text + "',productColour='" + productColour.Text + "',productDate= '" + productDate.Text + "'"+"where productID='"+int.Parse(productID.Text)+"'", con);
+            try
+            {
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Product Update Successfully");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+
+
+            con.Close();
+            BindData(); //because after insert then refresh again the fetch table
+        }
     }
 }
